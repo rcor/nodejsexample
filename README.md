@@ -1,12 +1,11 @@
-# ![Node/Express/Mongoose Example App](project-logo.png)
+# ![Node/Express/Mongoose Example App]
 
-[![Build Status](https://travis-ci.org/anishkny/node-express-realworld-example-app.svg?branch=master)](https://travis-ci.org/anishkny/node-express-realworld-example-app)
+[![Build Status](https://github.com/rcor/node-express-realworld-example-app.svg?branch=master)](https://travis-ci.org/anishkny/node-express-realworld-example-app)
 
-> ### Example Node (Express + Mongoose) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) API spec.
+![flujo de trabajo de ejemplo](https://github.com/rcor/nodejsexample/actions/workflows/node.js.yml/badge.svg)
 
-<a href="https://thinkster.io/tutorials/node-json-api" target="_blank"><img width="454" src="https://raw.githubusercontent.com/gothinkster/realworld/master/media/learn-btn-hr.png" /></a>
 
-This repo is functionality complete — PRs and issues welcome!
+
 
 # Getting started
 
@@ -47,6 +46,4 @@ In `routes/api/index.js`, we define a error-handling middleware for handling Mon
 Requests are authenticated using the `Authorization` header with a valid JWT. We define two express middlewares in `routes/auth.js` that can be used to authenticate requests. The `required` middleware configures the `express-jwt` middleware using our application's secret and will return a 401 status code if the request cannot be authenticated. The payload of the JWT can then be accessed from `req.payload` in the endpoint. The `optional` middleware configures the `express-jwt` in the same way as `required`, but will *not* return a 401 status code if the request cannot be authenticated.
 
 
-<br />
 
-[![Brought to you by Thinkster](https://raw.githubusercontent.com/gothinkster/realworld/master/media/end.png)](https://thinkster.io)

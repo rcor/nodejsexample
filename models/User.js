@@ -81,7 +81,6 @@ UserSchema.methods.follow = function(id){
   if(this.following.indexOf(id) === -1){
     this.following.push(id);
   }
-
   return this.save();
 };
 

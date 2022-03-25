@@ -1,8 +1,7 @@
 # ![Node/Express/Mongoose Example App]
 
-[![Build Status](https://github.com/rcor/node-express-realworld-example-app.svg?branch=master)](https://travis-ci.org/anishkny/node-express-realworld-example-app)
 
-![flujo de trabajo de ejemplo](https://github.com/rcor/nodejsexample/actions/workflows/node.js.yml/badge.svg)
+![Build Status](https://github.com/rcor/nodejsexample/actions/workflows/node.js.yml/badge.svg)
 
 
 

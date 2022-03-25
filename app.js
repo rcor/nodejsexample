@@ -1,25 +1,84 @@
-/*
+var http = require('http'),
+    path = require('path'),
+    methods = require('methods'),
+    express = require('express'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    cors = require('cors'),
+    passport = require('passport'),
+    errorhandler = require('errorhandler'),
+    mongoose = require('mongoose');
 
-GEREKLİ PAKETLER YÜKLENİYOR...
+var isProduction = process.env.NODE_ENV === 'production';
 
-*/
-var http = require('http');
-var express = require('express');
-
+// Create global app object
 var app = express();
 
-app.set('port', process.env.PORT || 3005); // GİRİŞ PORTU AYARLANDI
-app.set('views', __dirname + '/app/server/views'); // VIEW KLASÖRÜ TANITILDI
-app.set('view engine', 'ejs'); // VIEW ENGINE AYARLANDI
-app.use(express.static(__dirname + '/app/public')); // KULLANICILAR TARAFINDAN ERİŞİLEBİLEN KLASÖR TANIMLANDI
+app.use(cors());
 
-require('./app/routes')(app); // ROUTE DOSYASI ÇAĞIRILDI
+// Normal express config defaults
+app.use(require('morgan')('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-/*
+app.use(require('method-override')());
+app.use(express.static(__dirname + '/public'));
 
-HTTP SERVER OLUŞTURULDU
+app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 
-*/
-http.createServer(app).listen(app.get('port'), function(){
-	console.log('Sistem ' + app.get('port') + ' Portu Üzerinde Çalışıyor.');
+if (!isProduction) {
+  app.use(errorhandler());
+}
+
+if(isProduction){
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  mongoose.connect('mongodb://localhost/conduit');
+  mongoose.set('debug', true);
+}
+
+require('./models/User');
+require('./models/Article');
+require('./models/Comment');
+require('./config/passport');
+
+app.use(require('./routes'));
+
+/// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (!isProduction) {
+  app.use(function(err, req, res, next) {
+    console.log(err.stack);
+
+    res.status(err.status || 500);
+
+    res.json({'errors': {
+      message: err.message,
+      error: err
+    }});
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({'errors': {
+    message: err.message,
+    error: {}
+  }});
+});
+
+// finally, let's start our server...
+var server = app.listen( process.env.PORT || 3000, function(){
+  console.log('Listening on port ' + server.address().port);
 });

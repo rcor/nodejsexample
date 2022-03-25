@@ -22,6 +22,6 @@ jobs:
             tag_name: ${{ GITHUB_RUN_NUMBER} }}
             release_name: Release ${{ GITHUB_RUN_NUMBER }}
             body: |
-             Este body se puede configurar con templates y otras herramientas 
+              Este body se puede configurar con templates y otras herramientas 
             draft: false
             prerelease: false
